@@ -1,0 +1,391 @@
+-- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+--
+-- Host: localhost    Database: ipmanage
+-- ------------------------------------------------------
+-- Server version	5.7.20-0ubuntu0.16.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ip_hosts`
+--
+
+DROP TABLE IF EXISTS `ip_hosts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ip_hosts` (
+  `ip` int(10) unsigned DEFAULT NULL,
+  `ipdotted` varchar(15) DEFAULT '',
+  `hostname` varchar(63) DEFAULT '',
+  `aliases` text,
+  `comment` varchar(255) NOT NULL DEFAULT '',
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifier` varchar(10) DEFAULT '',
+  UNIQUE KEY `ip_unique` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ip_hosts`
+--
+
+LOCK TABLES `ip_hosts` WRITE;
+/*!40000 ALTER TABLE `ip_hosts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip_hosts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ip_hosts_duplicates`
+--
+
+DROP TABLE IF EXISTS `ip_hosts_duplicates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ip_hosts_duplicates` (
+  `name` varchar(63) DEFAULT '',
+  `ip` int(10) unsigned DEFAULT NULL,
+  UNIQUE KEY `name_ip` (`name`,`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ip_hosts_duplicates`
+--
+
+LOCK TABLES `ip_hosts_duplicates` WRITE;
+/*!40000 ALTER TABLE `ip_hosts_duplicates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip_hosts_duplicates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ip_hosts_history`
+--
+
+DROP TABLE IF EXISTS `ip_hosts_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ip_hosts_history` (
+  `ip` int(10) unsigned DEFAULT NULL,
+  `ipdotted` varchar(15) DEFAULT '',
+  `hostname` varchar(63) DEFAULT '',
+  `aliases` text,
+  `comment` varchar(255) NOT NULL DEFAULT '',
+  `old_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `old_modifier` varchar(10) DEFAULT '',
+  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modifier` varchar(10) DEFAULT '',
+  `mod_type` varchar(10) DEFAULT 'unknown'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ip_hosts_history`
+--
+
+LOCK TABLES `ip_hosts_history` WRITE;
+/*!40000 ALTER TABLE `ip_hosts_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip_hosts_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ip_hosts_restricted`
+--
+
+DROP TABLE IF EXISTS `ip_hosts_restricted`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ip_hosts_restricted` (
+  `ip` int(10) unsigned DEFAULT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifier` varchar(10) DEFAULT '',
+  UNIQUE KEY `ip_unique` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ip_hosts_restricted`
+--
+
+LOCK TABLES `ip_hosts_restricted` WRITE;
+/*!40000 ALTER TABLE `ip_hosts_restricted` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip_hosts_restricted` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ip_nets`
+--
+
+DROP TABLE IF EXISTS `ip_nets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ip_nets` (
+  `network` int(10) unsigned DEFAULT NULL,
+  `network_dotted` varchar(15) DEFAULT '',
+  `bitmask` int(2) DEFAULT '0',
+  `comment` varchar(255) NOT NULL DEFAULT '',
+  `owners` text,
+  `global_domain` varchar(80) DEFAULT '',
+  `local_domain` varchar(80) DEFAULT '',
+  `public` int(1) DEFAULT '0',
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifier` varchar(10) DEFAULT '',
+  UNIQUE KEY `network_unique` (`network`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ip_nets`
+--
+
+LOCK TABLES `ip_nets` WRITE;
+/*!40000 ALTER TABLE `ip_nets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip_nets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ip_nets_history`
+--
+
+DROP TABLE IF EXISTS `ip_nets_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ip_nets_history` (
+  `network` int(10) unsigned DEFAULT NULL,
+  `network_dotted` varchar(15) DEFAULT '',
+  `bitmask` int(2) DEFAULT '0',
+  `comment` varchar(255) NOT NULL DEFAULT '',
+  `owners` text,
+  `global_domain` varchar(80) DEFAULT '',
+  `local_domain` varchar(80) DEFAULT '',
+  `public` int(1) DEFAULT '0',
+  `old_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `old_modifier` varchar(10) DEFAULT '',
+  `modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modifier` varchar(10) DEFAULT '',
+  `mod_type` varchar(10) DEFAULT 'unknown'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ip_nets_history`
+--
+
+LOCK TABLES `ip_nets_history` WRITE;
+/*!40000 ALTER TABLE `ip_nets_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ip_nets_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_checksum`
+--
+
+DROP TABLE IF EXISTS `ipmanage_checksum`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_checksum` (
+  `checksum` varchar(25) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_checksum`
+--
+
+LOCK TABLES `ipmanage_checksum` WRITE;
+/*!40000 ALTER TABLE `ipmanage_checksum` DISABLE KEYS */;
+INSERT INTO `ipmanage_checksum` VALUES ('06578ac1c8510da4e0629b189');
+/*!40000 ALTER TABLE `ipmanage_checksum` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_db_updates`
+--
+
+DROP TABLE IF EXISTS `ipmanage_db_updates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_db_updates` (
+  `site` varchar(8) DEFAULT NULL,
+  `hostname` varchar(63) DEFAULT NULL,
+  `timestamp_general` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `timestamp_public` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `timestamp_private` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `timestamp_changes` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_db_updates`
+--
+
+LOCK TABLES `ipmanage_db_updates` WRITE;
+/*!40000 ALTER TABLE `ipmanage_db_updates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ipmanage_db_updates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_dns_updates`
+--
+
+DROP TABLE IF EXISTS `ipmanage_dns_updates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_dns_updates` (
+  `site` varchar(8) DEFAULT NULL,
+  `hostname` varchar(63) DEFAULT NULL,
+  `timestamp_general` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `timestamp_public` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `timestamp_private` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `timestamp_changes` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_dns_updates`
+--
+
+LOCK TABLES `ipmanage_dns_updates` WRITE;
+/*!40000 ALTER TABLE `ipmanage_dns_updates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ipmanage_dns_updates` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_last_cron_update`
+--
+
+DROP TABLE IF EXISTS `ipmanage_last_cron_update`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_last_cron_update` (
+  `last_run` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_last_cron_update`
+--
+
+LOCK TABLES `ipmanage_last_cron_update` WRITE;
+/*!40000 ALTER TABLE `ipmanage_last_cron_update` DISABLE KEYS */;
+INSERT INTO `ipmanage_last_cron_update` VALUES ('2017-12-17 18:03:01');
+/*!40000 ALTER TABLE `ipmanage_last_cron_update` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_last_ping_status`
+--
+
+DROP TABLE IF EXISTS `ipmanage_last_ping_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_last_ping_status` (
+  `ip` int(10) unsigned DEFAULT NULL,
+  `ipdotted` varchar(15) DEFAULT '',
+  `ping` int(1) NOT NULL DEFAULT '-1',
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY `ip_unique` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_last_ping_status`
+--
+
+LOCK TABLES `ipmanage_last_ping_status` WRITE;
+/*!40000 ALTER TABLE `ipmanage_last_ping_status` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ipmanage_last_ping_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_usercount`
+--
+
+DROP TABLE IF EXISTS `ipmanage_usercount`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_usercount` (
+  `ipmanageID` varchar(16) NOT NULL DEFAULT '',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `login` varchar(10) NOT NULL DEFAULT '',
+  `remote_address` varchar(15) NOT NULL DEFAULT '',
+  `client_hostname` varchar(80) NOT NULL DEFAULT '',
+  `client_ip` varchar(15) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_usercount`
+--
+
+LOCK TABLES `ipmanage_usercount` WRITE;
+/*!40000 ALTER TABLE `ipmanage_usercount` DISABLE KEYS */;
+INSERT INTO `ipmanage_usercount` VALUES ('LpjcURyQNYzdHEFa','2017-12-11 17:51:29','admin','192.168.0.16','NA','NA');
+/*!40000 ALTER TABLE `ipmanage_usercount` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_users`
+--
+
+DROP TABLE IF EXISTS `ipmanage_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_users` (
+  `login` varchar(10) NOT NULL DEFAULT '',
+  `passwd` varchar(13) NOT NULL DEFAULT '',
+  UNIQUE KEY `login_unique` (`login`),
+  KEY `login_index` (`login`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_users`
+--
+
+LOCK TABLES `ipmanage_users` WRITE;
+/*!40000 ALTER TABLE `ipmanage_users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ipmanage_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ipmanage_zoneserial`
+--
+
+DROP TABLE IF EXISTS `ipmanage_zoneserial`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ipmanage_zoneserial` (
+  `lastdate` date DEFAULT '0000-00-00',
+  `serial` int(2) unsigned DEFAULT '0',
+  UNIQUE KEY `lastdate_unique` (`lastdate`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ipmanage_zoneserial`
+--
+
+LOCK TABLES `ipmanage_zoneserial` WRITE;
+/*!40000 ALTER TABLE `ipmanage_zoneserial` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ipmanage_zoneserial` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-12-17 10:04:21

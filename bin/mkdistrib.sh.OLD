@@ -1,0 +1,8 @@
+#! /bin/ksh
+#
+gtar \
+--exclude='./DEVELOP' \
+--exclude='./log' \
+--exclude='./index.html' \
+--exclude='./modules/ipmanage_config.pm' \
+-cvf /tmp/ipmanage.tar .
